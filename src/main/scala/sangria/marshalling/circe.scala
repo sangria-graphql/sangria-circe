@@ -69,11 +69,11 @@ object circe {
     def render(node: Json) = node.noSpaces
   }
 
-  implicit object circeJsonToInput extends ToInput[Json, Json] {
+  implicit object circeToInput extends ToInput[Json, Json] {
     def toInput(value: Json) = (value, CirceInputUnmarshaller)
   }
 
-  implicit object circeJsonFromInput extends FromInput[Json] {
+  implicit object circeFromInput extends FromInput[Json] {
     val marshaller = CirceResultMarshaller
     def fromResult(node: marshaller.Node) = node
   }

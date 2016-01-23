@@ -7,10 +7,10 @@ import sangria.marshalling.circe._
 import sangria.marshalling.testkit._
 
 class CirceSupportSpec extends WordSpec with Matchers with MarshallingBehaviour with InputHandlingBehaviour {
-  "SprayJson integration" should {
+  "Circe integration" should {
     behave like `value (un)marshaller` (CirceResultMarshaller)
 
-    behave like `AST-based input unmarshaller` (circeJsonFromInput)
+    behave like `AST-based input unmarshaller` (circeFromInput)
     behave like `AST-based input marshaller` (CirceResultMarshaller)
   }
 
