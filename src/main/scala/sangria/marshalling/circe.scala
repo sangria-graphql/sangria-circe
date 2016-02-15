@@ -8,7 +8,7 @@ object circe {
 
     def emptyMapNode = Json.obj()
     def mapNode(keyValues: Seq[(String, Json)]) = Json.obj(keyValues: _*)
-    def addMapNodeElem(node: Json, key: String, value: Json, optional: Boolean) = node.mapObject(_ + (key, value))
+    def addMapNodeElem(node: Json, key: String, value: Json, optional: Boolean) = node.mapObject(_ add (key, value))
 
     def arrayNode(values: Vector[Json]) = Json.array(values: _*)
     def optionalArrayNodeValue(value: Option[Json]) = value match {
@@ -48,9 +48,9 @@ object circe {
       if (node.isBoolean)
         node.asBoolean.get
       else if (node.isNumber) {
-        val num = node.asNumber.get.toBigDecimal
-
-        num.toBigIntExact getOrElse num
+        val num = node.asNumber.get
+        
+        (num.toBigInt orElse num.toBigDecimal).get
       } else if (node.isString)
         node.asString.get
       else
