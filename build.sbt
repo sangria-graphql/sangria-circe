@@ -9,13 +9,16 @@ licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/
 scalaVersion := "2.11.7"
 scalacOptions ++= Seq("-deprecation", "-feature")
 
+val circeVersion = "0.3.0"
+
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "0.1.0",
-  "io.circe" %% "circe-core" % "0.3.0",
-  "io.circe" %% "circe-generic" % "0.3.0",
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.1.0" % "test",
-  "org.scalatest" %% "scalatest" % "2.2.4" % "test"
+  "io.circe" %% "circe-core" % circeVersion,
+  "io.circe" %% "circe-generic" % circeVersion,
+
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.1.1" % "test",
+  "org.scalatest" %% "scalatest" % "2.2.6" % "test"
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-circe.git"

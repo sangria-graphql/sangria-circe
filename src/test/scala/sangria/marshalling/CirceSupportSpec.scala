@@ -1,10 +1,12 @@
 package sangria.marshalling
 
-import io.circe.Json
 import org.scalatest.{Matchers, WordSpec}
 
 import sangria.marshalling.circe._
 import sangria.marshalling.testkit._
+
+import io.circe.Json
+import io.circe.generic.auto._
 
 class CirceSupportSpec extends WordSpec with Matchers with MarshallingBehaviour with InputHandlingBehaviour {
   "Circe integration" should {
@@ -12,6 +14,9 @@ class CirceSupportSpec extends WordSpec with Matchers with MarshallingBehaviour 
 
     behave like `AST-based input unmarshaller` (circeFromInput)
     behave like `AST-based input marshaller` (CirceResultMarshaller)
+
+    behave like `case class input unmarshaller`
+    behave like `case class input marshaller` (CirceResultMarshaller)
   }
 
   val toRender = Json.obj(

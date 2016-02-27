@@ -1,6 +1,7 @@
 package sangria.marshalling
 
 import io.circe._
+import cats.data.Xor.{Right, Left}
 
 object circe {
   implicit object CirceResultMarshaller extends ResultMarshaller {
@@ -77,4 +78,18 @@ object circe {
     val marshaller = CirceResultMarshaller
     def fromResult(node: marshaller.Node) = node
   }
+
+  implicit def circeEncoderToInput[T : Encoder]: ToInput[T, Json] =
+    new ToInput[T, Json] {
+      def toInput(value: T) = implicitly[Encoder[T]].apply(value) → CirceInputUnmarshaller
+    }
+
+  implicit def circeDecoderFromInput[T : Decoder]: FromInput[T] =
+    new FromInput[T] {
+      val marshaller = CirceResultMarshaller
+      def fromResult(node: marshaller.Node) = implicitly[Decoder[T]].decodeJson(node) match {
+        case Right(obj) ⇒ obj
+        case Left(error) ⇒ throw InputParsingError(Vector(error.getMessage))
+      }
+    }
 }
