@@ -1,3 +1,7 @@
+## v0.3.1 (2016-02-28)
+
+* Updated to latest version of marshalling API
+  
 ## v0.3.0 (2016-02-27)
 
 * Added support for `Encoder`/`Decoder`. This provides `ToInput` and `FromInput` instances for arbitrary tuples, case classes, etc. as long
