@@ -6,10 +6,13 @@ import cats.data.Xor.{Right, Left}
 object circe {
   implicit object CirceResultMarshaller extends ResultMarshaller {
     type Node = Json
+    type MapBuilder = ArrayMapBuilder[Node]
 
-    def emptyMapNode = Json.obj()
+    def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
+    def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) = builder.add(key, value)
+
+    def mapNode(builder: MapBuilder) = Json.obj(builder.toSeq: _*)
     def mapNode(keyValues: Seq[(String, Json)]) = Json.obj(keyValues: _*)
-    def addMapNodeElem(node: Json, key: String, value: Json, optional: Boolean) = node.mapObject(_ add (key, value))
 
     def arrayNode(values: Vector[Json]) = Json.array(values: _*)
     def optionalArrayNodeValue(value: Option[Json]) = value match {
