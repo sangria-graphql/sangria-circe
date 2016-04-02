@@ -14,20 +14,20 @@ object circe {
     def mapNode(builder: MapBuilder) = Json.obj(builder.toSeq: _*)
     def mapNode(keyValues: Seq[(String, Json)]) = Json.obj(keyValues: _*)
 
-    def arrayNode(values: Vector[Json]) = Json.array(values: _*)
+    def arrayNode(values: Vector[Json]) = Json.arr(values: _*)
     def optionalArrayNodeValue(value: Option[Json]) = value match {
       case Some(v) ⇒ v
       case None ⇒ nullNode
     }
 
-    def booleanNode(value: Boolean) = Json.bool(value)
-    def floatNode(value: Double) = Json.number(value).get
-    def stringNode(value: String) = Json.string(value)
-    def intNode(value: Int) = Json.int(value)
-    def bigIntNode(value: BigInt) = Json.bigDecimal(BigDecimal(value))
-    def bigDecimalNode(value: BigDecimal) = Json.bigDecimal(value)
+    def booleanNode(value: Boolean) = Json.fromBoolean(value)
+    def floatNode(value: Double) = Json.fromDouble(value).get
+    def stringNode(value: String) = Json.fromString(value)
+    def intNode(value: Int) = Json.fromInt(value)
+    def bigIntNode(value: BigInt) = Json.fromBigInt(value)
+    def bigDecimalNode(value: BigDecimal) = Json.fromBigDecimal(value)
 
-    def nullNode = Json.empty
+    def nullNode = Json.Null
 
     def renderCompact(node: Json) = node.noSpaces
     def renderPretty(node: Json) = node.spaces2

@@ -9,7 +9,7 @@ licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/
 scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-deprecation", "-feature")
 
-val circeVersion = "0.3.0"
+val circeVersion = "0.4.0-RC1"
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.0",

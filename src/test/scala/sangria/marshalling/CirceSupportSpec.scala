@@ -20,10 +20,10 @@ class CirceSupportSpec extends WordSpec with Matchers with MarshallingBehaviour 
   }
 
   val toRender = Json.obj(
-    "a" → Json.array(Json.empty, Json.int(123), Json.array(Json.obj("foo" → Json.string("bar")))),
+    "a" → Json.arr(Json.Null, Json.fromInt(123), Json.arr(Json.obj("foo" → Json.fromString("bar")))),
     "b" → Json.obj(
-      "c" → Json.bool(true),
-      "d" → Json.empty))
+      "c" → Json.fromBoolean(true),
+      "d" → Json.Null))
 
   "InputUnmarshaller" should {
     "throw an exception on invalid scalar values" in {
@@ -33,7 +33,7 @@ class CirceSupportSpec extends WordSpec with Matchers with MarshallingBehaviour 
 
     "throw an exception on variable names" in {
       an [IllegalArgumentException] should be thrownBy
-          CirceInputUnmarshaller.getVariableName(Json.string("$foo"))
+          CirceInputUnmarshaller.getVariableName(Json.fromString("$foo"))
     }
 
     "render JSON values" in {
