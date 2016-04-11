@@ -1,3 +1,7 @@
+## v0.4.2 (2016-04-11)
+
+* Updated `circe` to version 0.4.0
+
 ## v0.4.1 (2016-04-02)
 
 * Updated `circe` to version 0.4.0-RC1
