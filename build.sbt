@@ -1,6 +1,6 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-version := "0.4.4-SNAPSHOT"
+version := "0.4.4"
 
 description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
@@ -12,12 +12,12 @@ scalacOptions ++= Seq("-deprecation", "-feature")
 val circeVersion = "0.4.1"
 
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.0",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.1",
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.2.0" % "test",
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.2.1" % "test",
   "org.scalatest" %% "scalatest" % "2.2.6" % "test"
 )
 

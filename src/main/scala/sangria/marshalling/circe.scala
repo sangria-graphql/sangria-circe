@@ -20,6 +20,20 @@ object circe {
       case None ⇒ nullNode
     }
 
+    def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = value match {
+      case v: String ⇒ Json.fromString(v)
+      case v: Boolean ⇒ Json.fromBoolean(v)
+      case v: Int ⇒ Json.fromInt(v)
+      case v: Long ⇒ Json.fromLong(v)
+      case v: Float ⇒ Json.fromDouble(v).get
+      case v: Double ⇒ Json.fromDouble(v).get
+      case v: BigInt ⇒ Json.fromBigInt(v)
+      case v: BigDecimal ⇒ Json.fromBigDecimal(v)
+      case v ⇒ throw new IllegalArgumentException("Unsupported scalar value: " + v)
+    }
+
+    def enumNode(value: String, typeName: String) = Json.fromString(value)
+
     def booleanNode(value: Boolean) = Json.fromBoolean(value)
     def floatNode(value: Double) = Json.fromDouble(value).get
     def stringNode(value: String) = Json.fromString(value)
