@@ -34,13 +34,6 @@ object circe {
 
     def enumNode(value: String, typeName: String) = Json.fromString(value)
 
-    def booleanNode(value: Boolean) = Json.fromBoolean(value)
-    def floatNode(value: Double) = Json.fromDouble(value).get
-    def stringNode(value: String) = Json.fromString(value)
-    def intNode(value: Int) = Json.fromInt(value)
-    def bigIntNode(value: BigInt) = Json.fromBigInt(value)
-    def bigDecimalNode(value: BigDecimal) = Json.fromBigDecimal(value)
-
     def nullNode = Json.Null
 
     def renderCompact(node: Json) = node.noSpaces
