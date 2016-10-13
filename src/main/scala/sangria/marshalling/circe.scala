@@ -25,8 +25,8 @@ object circe {
       case v: Boolean ⇒ Json.fromBoolean(v)
       case v: Int ⇒ Json.fromInt(v)
       case v: Long ⇒ Json.fromLong(v)
-      case v: Float ⇒ Json.fromDouble(v).get
-      case v: Double ⇒ Json.fromDouble(v).get
+      case v: Float ⇒ Json.fromDoubleOrNull(v)
+      case v: Double ⇒ Json.fromDoubleOrNull(v)
       case v: BigInt ⇒ Json.fromBigInt(v)
       case v: BigDecimal ⇒ Json.fromBigDecimal(v)
       case v ⇒ throw new IllegalArgumentException("Unsupported scalar value: " + v)
