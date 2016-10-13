@@ -55,17 +55,18 @@ object circe {
     def getListValue(node: Json) = node.asArray.get
 
     def isDefined(node: Json) = !node.isNull
-    def getScalarValue(node: Json) =
-      if (node.isBoolean)
-        node.asBoolean.get
-      else if (node.isNumber) {
-        val num = node.asNumber.get
-        
-        (num.toBigInt orElse num.toBigDecimal).get
-      } else if (node.isString)
-        node.asString.get
-      else
-        throw new IllegalStateException(s"$node is not a scalar value")
+    def getScalarValue(node: Json) = {
+      def invalidScalar = throw new IllegalStateException(s"$node is not a scalar value")
+
+      node.fold(
+        jsonNull = invalidScalar,
+        jsonBoolean = identity,
+        jsonNumber = num ⇒ num.toBigInt orElse num.toBigDecimal getOrElse invalidScalar,
+        jsonString = identity,
+        jsonArray = _ ⇒ invalidScalar,
+        jsonObject = _ ⇒ invalidScalar
+      )
+    }
 
     def getScalaScalarValue(node: Json) = getScalarValue(node)
 
