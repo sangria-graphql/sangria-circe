@@ -1,3 +1,7 @@
+## v0.5.3 (2016-10-23)
+
+* Updated `circe` to version 0.5.4
+
 ## v0.5.2 (2016-10-14)
 
 * Encode `Double.NaN` and infinity as `null` (#2). Big thanks to @jonas for this contribution!

@@ -1,6 +1,6 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-version := "0.5.3-SNAPSHOT"
+version := "0.5.3"
 
 description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
@@ -9,7 +9,7 @@ licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/
 scalaVersion := "2.11.8"
 scalacOptions ++= Seq("-deprecation", "-feature")
 
-val circeVersion = "0.5.3"
+val circeVersion = "0.5.4"
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.1",
@@ -17,8 +17,8 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.2.1" % "test",
-  "org.scalatest" %% "scalatest" % "2.2.6" % "test"
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.2.2" % "test",
+  "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-circe.git"
