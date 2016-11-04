@@ -1,7 +1,6 @@
 package sangria.marshalling
 
 import io.circe._
-import cats.data.Xor.{Right, Left}
 
 object circe {
   implicit object CirceResultMarshaller extends ResultMarshaller {
