@@ -1,4 +1,4 @@
-## master
+## v0.6.0 (2016-11-10)
 
 * Updated `circe` to version 0.6.0
 * Cross-compile for scala 2.11 and 2.12
