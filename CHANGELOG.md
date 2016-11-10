@@ -1,3 +1,9 @@
+## master
+
+* Updated `circe` to version 0.6.0
+* Cross-compile for scala 2.11 and 2.12
+* Updated dependencies
+
 ## v0.5.3 (2016-10-23)
 
 * Updated `circe` to version 0.5.4
