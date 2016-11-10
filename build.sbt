@@ -6,10 +6,19 @@ description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq("Apache License, ASL Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.0"
+crossScalaVersions := Seq("2.11.8", "2.12.0")
+
 scalacOptions ++= Seq("-deprecation", "-feature")
 
-val circeVersion = "0.6.0-RC1"
+scalacOptions ++= {
+  if (scalaVersion.value startsWith "2.12")
+    Seq.empty
+  else
+    Seq("-target:jvm-1.7")
+}
+
+val circeVersion = "0.6.0"
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "0.2.2",
@@ -17,7 +26,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.2.2" % "test",
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "0.2.3" % "test",
   "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 )
 
