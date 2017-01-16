@@ -5,7 +5,7 @@
 SBT Configuration:
 
 ```scala
-libraryDependencies += "org.sangria-graphql" %% "sangria-circe" % "0.6.1"
+libraryDependencies += "org.sangria-graphql" %% "sangria-circe" % "1.0.0"
 ```
 
 ## License
