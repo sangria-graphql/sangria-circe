@@ -1,3 +1,7 @@
+## v1.0.1 (2017-01-18)
+
+* Updated `circe` to version 0.7.0
+
 ## v1.0.0 (2017-01-16)
 
 * 1.0 Release
