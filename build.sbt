@@ -18,16 +18,16 @@ scalacOptions ++= {
     Seq("-target:jvm-1.7")
 }
 
-val circeVersion = "0.6.1"
+val circeVersion = "0.7.0"
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.0",
 
   "io.circe" %% "circe-core" % circeVersion,
-  "io.circe" %% "circe-generic" % circeVersion,
+  "io.circe" %% "circe-generic" % circeVersion % Test,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.0" % "test",
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test"
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.0" % Test,
+  "org.scalatest" %% "scalatest" % "3.0.1" % Test
 )
 
 git.remoteRepo := "git@github.com:sangria-graphql/sangria-circe.git"
