@@ -48,7 +48,7 @@ object circe {
 
     def isMapNode(node: Json) = node.isObject
     def getMapValue(node: Json, key: String) = node.asObject.get(key)
-    def getMapKeys(node: Json) = node.asObject.get.fields
+    def getMapKeys(node: Json) = node.asObject.get.keys
 
     def isListNode(node: Json) = node.isArray
     def getListValue(node: Json) = node.asArray.get
