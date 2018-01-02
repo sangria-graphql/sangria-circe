@@ -1,3 +1,7 @@
+## to come
+
+* Updated `circe` to version 0.9.0
+
 ## v1.1.1 (2017-12-18)
 
 * Updated `circe` to version 0.9.0-M2
