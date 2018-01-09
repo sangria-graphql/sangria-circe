@@ -10,10 +10,10 @@ object circe {
     def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
     def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) = builder.add(key, value)
 
-    def mapNode(builder: MapBuilder) = Json.obj(builder.toSeq: _*)
-    def mapNode(keyValues: Seq[(String, Json)]) = Json.obj(keyValues: _*)
+    def mapNode(builder: MapBuilder) = Json.fromFields(builder.toSeq)
+    def mapNode(keyValues: Seq[(String, Json)]) = Json.fromFields(keyValues)
 
-    def arrayNode(values: Vector[Json]) = Json.arr(values: _*)
+    def arrayNode(values: Vector[Json]) = Json.fromValues(values)
     def optionalArrayNodeValue(value: Option[Json]) = value match {
       case Some(v) ⇒ v
       case None ⇒ nullNode
