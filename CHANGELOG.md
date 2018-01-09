@@ -1,4 +1,4 @@
-## to come
+## v1.2.0 (2018-01-09)
 
 * Updated `circe` to version 0.9.0
 
