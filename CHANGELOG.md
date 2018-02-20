@@ -1,4 +1,4 @@
-## v1.2.1 (2018-01-09)
+## v1.2.1 (2018-02-20)
 
 * Updated `circe` to version 0.9.1
 * Updated `sangria-marshalling-api` to version 1.0.1
