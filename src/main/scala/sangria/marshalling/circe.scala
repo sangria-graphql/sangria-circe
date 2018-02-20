@@ -10,7 +10,7 @@ object circe {
     def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
     def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) = builder.add(key, value)
 
-    def mapNode(builder: MapBuilder) = Json.fromFields(builder.toSeq)
+    def mapNode(builder: MapBuilder) = Json.fromFields(builder)
     def mapNode(keyValues: Seq[(String, Json)]) = Json.fromFields(keyValues)
 
     def arrayNode(values: Vector[Json]) = Json.fromValues(values)
