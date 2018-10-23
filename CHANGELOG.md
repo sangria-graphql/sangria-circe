@@ -1,3 +1,7 @@
+## v1.3.0-SNAPSHOT
+
+* Updated `circe` to version 0.10.0
+
 ## v1.2.1 (2018-02-20)
 
 * Updated `circe` to version 0.9.1
