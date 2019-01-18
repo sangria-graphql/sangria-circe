@@ -1,3 +1,7 @@
+## v1.2.2 (2019-01-18)
+
+* Added support for supporting Scalar Char Type
+
 ## v1.2.1 (2018-02-20)
 
 * Updated `circe` to version 0.9.1
