@@ -18,7 +18,7 @@ scalacOptions ++= {
     Seq("-target:jvm-1.7")
 }
 
-val circeVersion = "0.10.1"
+val circeVersion = "0.11.1"
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.3",
