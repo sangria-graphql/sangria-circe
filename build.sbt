@@ -1,6 +1,6 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-version := "1.2.2-SNAPSHOT"
+version := "1.3.0-SNAPSHOT"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.2.1")
 
 description := "Sangria circe marshalling"
