@@ -1,6 +1,7 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
 version := "1.2.2-SNAPSHOT"
+mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.2.1")
 
 description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
@@ -18,15 +19,15 @@ scalacOptions ++= {
     Seq("-target:jvm-1.7")
 }
 
-val circeVersion = "0.12.0-RC1"
+val circeVersion = "0.12.1"
 
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "2.0.0-SNAPSHOT",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4-SNAPSHOT",
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion % Test,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.3-SNAPSHOT" % Test,
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.2-SNAPSHOT" % Test,
   "org.scalatest" %% "scalatest" % "3.0.8" % Test
 )
 
