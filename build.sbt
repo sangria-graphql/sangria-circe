@@ -7,16 +7,16 @@ description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.12.9"
-crossScalaVersions := Seq("2.12.9", "2.13.0")
+scalaVersion := "2.12.10"
+crossScalaVersions := Seq("2.12.10", "2.13.0")
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
 scalacOptions ++= {
-  if (scalaVersion.value startsWith "2.12")
-    Seq.empty
-  else
+  if (scalaVersion.value startsWith "2.11")
     Seq("-target:jvm-1.7")
+  else
+    Seq.empty
 }
 
 val circeVersion = "0.12.1"
