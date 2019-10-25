@@ -1,6 +1,5 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-version := "1.3.0-SNAPSHOT"
 mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.2.1")
 
 description := "Sangria circe marshalling"
@@ -32,7 +31,8 @@ libraryDependencies ++= Seq(
 )
 
 // Publishing
-
+releaseCrossBuild := true
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
 publishMavenStyle := true
 publishArtifact in Test := false
 pomIncludeRepository := (_ ⇒ false)
