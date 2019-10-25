@@ -22,12 +22,12 @@ scalacOptions ++= {
 val circeVersion = "0.12.1"
 
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4-SNAPSHOT",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4",
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion % Test,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.2-SNAPSHOT" % Test,
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.2" % Test,
   "org.scalatest" %% "scalatest" % "3.0.8" % Test
 )
 
