@@ -21,7 +21,7 @@ object circe {
 
     def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = value match {
       case v: String ⇒ Json.fromString(v)
-      case v: Char ⇒ Json.fromString(v.toString)
+      case v: Char => Json.fromString(v.toString)
       case v: Boolean ⇒ Json.fromBoolean(v)
       case v: Int ⇒ Json.fromInt(v)
       case v: Long ⇒ Json.fromLong(v)
