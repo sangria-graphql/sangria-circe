@@ -21,10 +21,10 @@ class CirceSupportSpec extends AnyWordSpec with Matchers with MarshallingBehavio
   }
 
   val toRender = Json.obj(
-    "a" → Json.arr(Json.Null, Json.fromInt(123), Json.arr(Json.obj("foo" → Json.fromString("bar")))),
-    "b" → Json.obj(
-      "c" → Json.fromBoolean(true),
-      "d" → Json.Null))
+    "a" -> Json.arr(Json.Null, Json.fromInt(123), Json.arr(Json.obj("foo" -> Json.fromString("bar")))),
+    "b" -> Json.obj(
+      "c" -> Json.fromBoolean(true),
+      "d" -> Json.Null))
 
   "InputUnmarshaller" should {
     "throw an exception on invalid scalar values" in {
