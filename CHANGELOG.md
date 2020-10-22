@@ -1,3 +1,27 @@
+https://github.com/sangria-graphql/sangria-circe/releases
+
+## v1.3.1 (2020-10-22)
+
+* emit jvm 8 bytecode (#37) @yanns
+* scalatest 3.2.2 (#36) @yanns
+* fix deprecated symbols (#35) @yanns
+* Scala updates (#34) @yanns
+* Update sbt-release to 1.0.13 (#24) @scala-steward
+* Update sbt-mima-plugin to 0.6.4 (#25) @scala-steward
+* Update sbt to 1.3.13 (#31) @scala-steward
+* Update circe-core, circe-generic to 0.13.0 (#26) @scala-steward
+* Update scalatest to 3.1.4 (#33) @scala-steward
+* automate release notes (#23) @yanns
+* automate release notes (#22) @yanns
+* back to sangria-graphql (#21) @yanns
+
+## v1.3.0 (2020-04-28)
+
+MiMa doesn't report any incompatibilities with 1.2.1, but the update in the Circe version does include breaking changes, so please be careful when updating.
+
+* Added cross-compilation for Scala 2.13.
+* Updated the Circe version from 0.9.1 to 0.12.3.
+
 ## v1.2.1 (2018-02-20)
 
 * Updated `circe` to version 0.9.1
