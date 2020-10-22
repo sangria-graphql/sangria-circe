@@ -1,14 +1,15 @@
 package sangria.marshalling
 
-import org.scalatest.{Matchers, WordSpec}
 
 import sangria.marshalling.circe._
 import sangria.marshalling.testkit._
 
 import io.circe.Json
 import io.circe.generic.auto._
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class CirceSupportSpec extends WordSpec with Matchers with MarshallingBehaviour with InputHandlingBehaviour {
+class CirceSupportSpec extends AnyWordSpec with Matchers with MarshallingBehaviour with InputHandlingBehaviour {
   "Circe integration" should {
     behave like `value (un)marshaller` (CirceResultMarshaller)
 

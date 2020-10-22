@@ -1,37 +1,38 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-version := "1.2.2"
+mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.2.1")
 
 description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq("Apache License, ASL Version 2.0" → url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-scalaVersion := "2.12.6"
-crossScalaVersions := Seq("2.11.11", "2.12.6")
+scalaVersion := "2.13.0"
+crossScalaVersions := Seq("2.12.10", scalaVersion.value)
 
 scalacOptions ++= Seq("-deprecation", "-feature")
 
 scalacOptions ++= {
-  if (scalaVersion.value startsWith "2.12")
-    Seq.empty
-  else
+  if (scalaVersion.value startsWith "2.11")
     Seq("-target:jvm-1.7")
+  else
+    Seq.empty
 }
 
-val circeVersion = "0.9.3"
+val circeVersion = "0.13.0"
 
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.1",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.4",
 
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion % Test,
 
-  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.1" % Test,
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
+  "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.3" % Test,
+  "org.scalatest" %% "scalatest" % "3.1.4" % Test
 )
 
 // Publishing
-
+releaseCrossBuild := true
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
 publishMavenStyle := true
 publishArtifact in Test := false
 pomIncludeRepository := (_ ⇒ false)
