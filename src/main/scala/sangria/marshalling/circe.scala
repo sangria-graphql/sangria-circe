@@ -15,20 +15,20 @@ object circe {
 
     def arrayNode(values: Vector[Json]) = Json.fromValues(values)
     def optionalArrayNodeValue(value: Option[Json]) = value match {
-      case Some(v) ⇒ v
-      case None ⇒ nullNode
+      case Some(v) => v
+      case None => nullNode
     }
 
     def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = value match {
-      case v: String ⇒ Json.fromString(v)
-      case v: Boolean ⇒ Json.fromBoolean(v)
-      case v: Int ⇒ Json.fromInt(v)
-      case v: Long ⇒ Json.fromLong(v)
-      case v: Float ⇒ Json.fromDoubleOrNull(v)
-      case v: Double ⇒ Json.fromDoubleOrNull(v)
-      case v: BigInt ⇒ Json.fromBigInt(v)
-      case v: BigDecimal ⇒ Json.fromBigDecimal(v)
-      case v ⇒ throw new IllegalArgumentException("Unsupported scalar value: " + v)
+      case v: String => Json.fromString(v)
+      case v: Boolean => Json.fromBoolean(v)
+      case v: Int => Json.fromInt(v)
+      case v: Long => Json.fromLong(v)
+      case v: Float => Json.fromDoubleOrNull(v)
+      case v: Double => Json.fromDoubleOrNull(v)
+      case v: BigInt => Json.fromBigInt(v)
+      case v: BigDecimal => Json.fromBigDecimal(v)
+      case v => throw new IllegalArgumentException("Unsupported scalar value: " + v)
     }
 
     def enumNode(value: String, typeName: String) = Json.fromString(value)
@@ -60,10 +60,10 @@ object circe {
       node.fold(
         jsonNull = invalidScalar,
         jsonBoolean = identity,
-        jsonNumber = num ⇒ num.toBigInt orElse num.toBigDecimal getOrElse invalidScalar,
+        jsonNumber = num => num.toBigInt orElse num.toBigDecimal getOrElse invalidScalar,
         jsonString = identity,
-        jsonArray = _ ⇒ invalidScalar,
-        jsonObject = _ ⇒ invalidScalar
+        jsonArray = _ => invalidScalar,
+        jsonObject = _ => invalidScalar
       )
     }
 
@@ -91,15 +91,15 @@ object circe {
 
   implicit def circeEncoderToInput[T : Encoder]: ToInput[T, Json] =
     new ToInput[T, Json] {
-      def toInput(value: T) = implicitly[Encoder[T]].apply(value) → CirceInputUnmarshaller
+      def toInput(value: T) = implicitly[Encoder[T]].apply(value) -> CirceInputUnmarshaller
     }
 
   implicit def circeDecoderFromInput[T : Decoder]: FromInput[T] =
     new FromInput[T] {
       val marshaller = CirceResultMarshaller
       def fromResult(node: marshaller.Node) = implicitly[Decoder[T]].decodeJson(node) match {
-        case Right(obj) ⇒ obj
-        case Left(error) ⇒ throw InputParsingError(Vector(error.getMessage))
+        case Right(obj) => obj
+        case Left(error) => throw InputParsingError(Vector(error.getMessage))
       }
     }
 }
