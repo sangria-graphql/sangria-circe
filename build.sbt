@@ -1,6 +1,6 @@
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.2.1")
+mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.3.1")
 
 description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
