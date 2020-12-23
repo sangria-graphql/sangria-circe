@@ -8,7 +8,8 @@ object circe {
     type MapBuilder = ArrayMapBuilder[Node]
 
     def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
-    def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) = builder.add(key, value)
+    def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) =
+      builder.add(key, value)
 
     def mapNode(builder: MapBuilder) = Json.fromFields(builder)
     def mapNode(keyValues: Seq[(String, Json)]) = Json.fromFields(keyValues)
@@ -60,7 +61,7 @@ object circe {
       node.fold(
         jsonNull = invalidScalar,
         jsonBoolean = identity,
-        jsonNumber = num => num.toBigInt orElse num.toBigDecimal getOrElse invalidScalar,
+        jsonNumber = num => num.toBigInt.orElse(num.toBigDecimal).getOrElse(invalidScalar),
         jsonString = identity,
         jsonArray = _ => invalidScalar,
         jsonObject = _ => invalidScalar
@@ -75,7 +76,8 @@ object circe {
       node.isBoolean || node.isNumber || node.isString
 
     def isVariableNode(node: Json) = false
-    def getVariableName(node: Json) = throw new IllegalArgumentException("variables are not supported")
+    def getVariableName(node: Json) = throw new IllegalArgumentException(
+      "variables are not supported")
 
     def render(node: Json) = node.noSpaces
   }
@@ -89,12 +91,12 @@ object circe {
     def fromResult(node: marshaller.Node) = node
   }
 
-  implicit def circeEncoderToInput[T : Encoder]: ToInput[T, Json] =
+  implicit def circeEncoderToInput[T: Encoder]: ToInput[T, Json] =
     new ToInput[T, Json] {
       def toInput(value: T) = implicitly[Encoder[T]].apply(value) -> CirceInputUnmarshaller
     }
 
-  implicit def circeDecoderFromInput[T : Decoder]: FromInput[T] =
+  implicit def circeDecoderFromInput[T: Decoder]: FromInput[T] =
     new FromInput[T] {
       val marshaller = CirceResultMarshaller
       def fromResult(node: marshaller.Node) = implicitly[Decoder[T]].decodeJson(node) match {
