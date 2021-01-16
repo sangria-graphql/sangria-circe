@@ -8,19 +8,23 @@ object circe {
     type MapBuilder = ArrayMapBuilder[Node]
 
     def emptyMapNode(keys: Seq[String]) = new ArrayMapBuilder[Node](keys)
-    def addMapNodeElem(builder: MapBuilder, key: String, value: Node, optional: Boolean) =
+    def addMapNodeElem(
+        builder: MapBuilder,
+        key: String,
+        value: Node,
+        optional: Boolean): ArrayMapBuilder[Json] =
       builder.add(key, value)
 
-    def mapNode(builder: MapBuilder) = Json.fromFields(builder)
-    def mapNode(keyValues: Seq[(String, Json)]) = Json.fromFields(keyValues)
+    def mapNode(builder: MapBuilder): Json = Json.fromFields(builder)
+    def mapNode(keyValues: Seq[(String, Json)]): Json = Json.fromFields(keyValues)
 
-    def arrayNode(values: Vector[Json]) = Json.fromValues(values)
-    def optionalArrayNodeValue(value: Option[Json]) = value match {
+    def arrayNode(values: Vector[Json]): Json = Json.fromValues(values)
+    def optionalArrayNodeValue(value: Option[Json]): Json = value match {
       case Some(v) => v
       case None => nullNode
     }
 
-    def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]) = value match {
+    def scalarNode(value: Any, typeName: String, info: Set[ScalarValueInfo]): Json = value match {
       case v: String => Json.fromString(v)
       case v: Boolean => Json.fromBoolean(v)
       case v: Int => Json.fromInt(v)
@@ -32,30 +36,30 @@ object circe {
       case v => throw new IllegalArgumentException("Unsupported scalar value: " + v)
     }
 
-    def enumNode(value: String, typeName: String) = Json.fromString(value)
+    def enumNode(value: String, typeName: String): Json = Json.fromString(value)
 
-    def nullNode = Json.Null
+    def nullNode: Json = Json.Null
 
-    def renderCompact(node: Json) = node.noSpaces
-    def renderPretty(node: Json) = node.spaces2
+    def renderCompact(node: Json): String = node.noSpaces
+    def renderPretty(node: Json): String = node.spaces2
   }
 
   implicit object CirceMarshallerForType extends ResultMarshallerForType[Json] {
-    val marshaller = CirceResultMarshaller
+    val marshaller: CirceResultMarshaller.type = CirceResultMarshaller
   }
 
   implicit object CirceInputUnmarshaller extends InputUnmarshaller[Json] {
-    def getRootMapValue(node: Json, key: String) = node.asObject.get(key)
+    def getRootMapValue(node: Json, key: String): Option[Json] = node.asObject.get(key)
 
-    def isMapNode(node: Json) = node.isObject
-    def getMapValue(node: Json, key: String) = node.asObject.get(key)
-    def getMapKeys(node: Json) = node.asObject.get.keys
+    def isMapNode(node: Json): Boolean = node.isObject
+    def getMapValue(node: Json, key: String): Option[Json] = node.asObject.get(key)
+    def getMapKeys(node: Json): Iterable[String] = node.asObject.get.keys
 
-    def isListNode(node: Json) = node.isArray
-    def getListValue(node: Json) = node.asArray.get
+    def isListNode(node: Json): Boolean = node.isArray
+    def getListValue(node: Json): Vector[Json] = node.asArray.get
 
-    def isDefined(node: Json) = !node.isNull
-    def getScalarValue(node: Json) = {
+    def isDefined(node: Json): Boolean = !node.isNull
+    def getScalarValue(node: Json): Any = {
       def invalidScalar = throw new IllegalStateException(s"$node is not a scalar value")
 
       node.fold(
@@ -68,38 +72,36 @@ object circe {
       )
     }
 
-    def getScalaScalarValue(node: Json) = getScalarValue(node)
+    def getScalaScalarValue(node: Json): Any = getScalarValue(node)
 
-    def isEnumNode(node: Json) = node.isString
+    def isEnumNode(node: Json): Boolean = node.isString
 
-    def isScalarNode(node: Json) =
+    def isScalarNode(node: Json): Boolean =
       node.isBoolean || node.isNumber || node.isString
 
     def isVariableNode(node: Json) = false
     def getVariableName(node: Json) = throw new IllegalArgumentException(
       "variables are not supported")
 
-    def render(node: Json) = node.noSpaces
+    def render(node: Json): String = node.noSpaces
   }
 
   implicit object circeToInput extends ToInput[Json, Json] {
-    def toInput(value: Json) = (value, CirceInputUnmarshaller)
+    def toInput(value: Json): (Json, CirceInputUnmarshaller.type) = (value, CirceInputUnmarshaller)
   }
 
   implicit object circeFromInput extends FromInput[Json] {
-    val marshaller = CirceResultMarshaller
-    def fromResult(node: marshaller.Node) = node
+    val marshaller: CirceResultMarshaller.type = CirceResultMarshaller
+    def fromResult(node: marshaller.Node): marshaller.Node = node
   }
 
   implicit def circeEncoderToInput[T: Encoder]: ToInput[T, Json] =
-    new ToInput[T, Json] {
-      def toInput(value: T) = implicitly[Encoder[T]].apply(value) -> CirceInputUnmarshaller
-    }
+    (value: T) => implicitly[Encoder[T]].apply(value) -> CirceInputUnmarshaller
 
   implicit def circeDecoderFromInput[T: Decoder]: FromInput[T] =
     new FromInput[T] {
-      val marshaller = CirceResultMarshaller
-      def fromResult(node: marshaller.Node) = implicitly[Decoder[T]].decodeJson(node) match {
+      val marshaller: CirceResultMarshaller.type = CirceResultMarshaller
+      def fromResult(node: marshaller.Node): T = implicitly[Decoder[T]].decodeJson(node) match {
         case Right(obj) => obj
         case Left(error) => throw InputParsingError(Vector(error.getMessage))
       }
