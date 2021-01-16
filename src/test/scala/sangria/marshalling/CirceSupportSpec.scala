@@ -23,7 +23,7 @@ class CirceSupportSpec
     behave.like(`case class input marshaller`(CirceResultMarshaller))
   }
 
-  val toRender = Json.obj(
+  val toRender: Json = Json.obj(
     "a" -> Json.arr(
       Json.Null,
       Json.fromInt(123),
