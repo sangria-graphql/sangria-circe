@@ -32,11 +32,6 @@ class CirceSupportSpec
   )
 
   "InputUnmarshaller" should {
-    "throw an exception on invalid scalar values" in {
-      an[IllegalStateException] should be thrownBy
-        CirceInputUnmarshaller.getScalarValue(Json.obj())
-    }
-
     "throw an exception on variable names" in {
       an[IllegalArgumentException] should be thrownBy
         CirceInputUnmarshaller.getVariableName(Json.fromString("$foo"))

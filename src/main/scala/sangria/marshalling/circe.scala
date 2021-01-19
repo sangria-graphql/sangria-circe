@@ -33,6 +33,7 @@ object circe {
       case v: Double => Json.fromDoubleOrNull(v)
       case v: BigInt => Json.fromBigInt(v)
       case v: BigDecimal => Json.fromBigDecimal(v)
+      case v: Json if v.isObject => v
       case v => throw new IllegalArgumentException("Unsupported scalar value: " + v)
     }
 
@@ -68,16 +69,22 @@ object circe {
         jsonNumber = num => num.toBigInt.orElse(num.toBigDecimal).getOrElse(invalidScalar),
         jsonString = identity,
         jsonArray = _ => invalidScalar,
-        jsonObject = _ => invalidScalar
+        jsonObject = jsonObject => Json.fromJsonObject(jsonObject)
       )
     }
 
-    def getScalaScalarValue(node: Json): Any = getScalarValue(node)
+    import sangria.marshalling.MarshallingUtil._
+    import sangria.util.tag.@@
+    import sangria.marshalling.scalaMarshalling._
+
+    def getScalaScalarValue(node: Json): Any =
+      if (node.isObject) convert[Json, Any @@ ScalaInput](node)
+      else  getScalarValue(node)
 
     def isEnumNode(node: Json): Boolean = node.isString
 
     def isScalarNode(node: Json): Boolean =
-      node.isBoolean || node.isNumber || node.isString
+      node.isBoolean || node.isNumber || node.isString || node.isObject
 
     def isVariableNode(node: Json) = false
     def getVariableName(node: Json) = throw new IllegalArgumentException(
