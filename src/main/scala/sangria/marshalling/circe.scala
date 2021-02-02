@@ -1,6 +1,8 @@
 package sangria.marshalling
 
 import io.circe._
+import sangria.util.tag
+import sangria.util.tag.@@
 
 object circe {
   implicit object CirceResultMarshaller extends ResultMarshaller {
@@ -106,4 +108,53 @@ object circe {
         case Left(error) => throw InputParsingError(Vector(error.getMessage))
       }
     }
+
+  implicit object CirceAnyInputUnmarshaller extends InputUnmarshaller[Json @@ AnySupport] {
+    type Node = Json @@ AnySupport
+
+    def getRootMapValue(node: Node, key: String): Option[Node] =
+      node.asObject.get(key).map(value => tag[AnySupport].apply[Json](value))
+
+    def isMapNode(node: Node): Boolean = node.isObject
+    def getMapValue(node: Node, key: String): Option[Node] =
+      node.asObject.get(key).map(value => tag[AnySupport].apply[Json](value))
+
+    def getMapKeys(node: Node): Iterable[String] = node.asObject.get.keys
+
+    def isListNode(node: Node): Boolean = node.isArray
+    def getListValue(node: Node): Vector[Node] =
+      node.asArray.get.map(value => tag[AnySupport].apply[Json](value))
+
+    def isDefined(node: Node): Boolean = !node.isNull
+    def getScalarValue(node: Node): Any = {
+      def invalidScalar = throw new IllegalStateException(s"$node is not a scalar value")
+
+      node.fold(
+        jsonNull = invalidScalar,
+        jsonBoolean = identity,
+        jsonNumber = num => num.toBigInt.orElse(num.toBigDecimal).getOrElse(invalidScalar),
+        jsonString = identity,
+        jsonArray = _ => invalidScalar,
+        jsonObject = jsonObject => Json.fromJsonObject(jsonObject)
+      )
+    }
+
+    import sangria.marshalling.MarshallingUtil._
+    import sangria.marshalling.scalaMarshalling._
+
+    def getScalaScalarValue(node: Node): Any =
+      if (node.isObject) convert[Json @@ AnySupport, Any @@ ScalaInput](node)
+      else  getScalarValue(node)
+
+    def isEnumNode(node: Node): Boolean = node.isString
+
+    def isScalarNode(node: Node): Boolean =
+      node.isObject || node.isBoolean || node.isNumber || node.isString
+
+    def isVariableNode(node: Node) = false
+    def getVariableName(node: Node) = throw new IllegalArgumentException(
+      "variables are not supported")
+
+    def render(node: Node): String = node.noSpaces
+  }
 }
