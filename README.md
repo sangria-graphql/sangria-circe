@@ -1,4 +1,4 @@
-[Sangria](http://sangria-graphql.org/) [circe](http://circe.io) marshalling.
+[Sangria](https://sangria-graphql.github.io/) [circe](http://circe.io) marshalling.
 
 ![Continuous Integration](https://github.com/sangria-graphql/sangria-circe/workflows/Continuous%20Integration/badge.svg)
 [![Build Status](https://travis-ci.org/sangria-graphql/sangria-circe.svg?branch=master)](https://travis-ci.org/sangria-graphql/sangria-circe)
