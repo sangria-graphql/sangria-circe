@@ -27,7 +27,7 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion % Test,
   "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.3" % Test,
-  "org.scalatest" %% "scalatest" % "3.2.8" % Test
+  "org.scalatest" %% "scalatest" % "3.2.9" % Test
 )
 
 // Publishing
