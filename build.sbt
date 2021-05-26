@@ -20,7 +20,7 @@ scalacOptions ++= Seq("-deprecation", "-feature")
 scalacOptions += "-target:jvm-1.8"
 javacOptions ++= Seq("-source", "8", "-target", "8")
 
-val circeVersion = "0.13.0"
+val circeVersion = "0.14.0"
 
 libraryDependencies ++= Seq(
   "org.sangria-graphql" %% "sangria-marshalling-api" % "1.0.5",
