@@ -1,13 +1,22 @@
+val isScala3 = Def.setting(
+  CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 3)
+)
+
 name := "sangria-circe"
 organization := "org.sangria-graphql"
-mimaPreviousArtifacts := Set("org.sangria-graphql" %% "sangria-circe" % "1.3.1")
+mimaPreviousArtifacts := {
+  if (isScala3.value)
+    Set.empty
+  else
+    Set("org.sangria-graphql" %% "sangria-circe" % "1.3.1")
+}
 
 description := "Sangria circe marshalling"
 homepage := Some(url("http://sangria-graphql.org"))
 licenses := Seq(
   "Apache License, ASL Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0"))
 
-ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6")
+ThisBuild / crossScalaVersions := Seq("2.12.14", "2.13.6", "3.0.0")
 ThisBuild / scalaVersion := crossScalaVersions.value.last
 ThisBuild / githubWorkflowPublishTargetBranches := List()
 ThisBuild / githubWorkflowBuildPreamble ++= List(
@@ -16,8 +25,12 @@ ThisBuild / githubWorkflowBuildPreamble ++= List(
 )
 
 scalacOptions ++= Seq("-deprecation", "-feature")
-
-scalacOptions += "-target:jvm-1.8"
+scalacOptions ++= {
+  if (isScala3.value)
+    Seq("-Xtarget:8")
+  else
+    Seq("-target:jvm-1.8")
+}
 javacOptions ++= Seq("-source", "8", "-target", "8")
 
 val circeVersion = "0.14.1"
@@ -34,7 +47,6 @@ libraryDependencies ++= Seq(
 ThisBuild / githubWorkflowTargetTags ++= Seq("v*")
 ThisBuild / githubWorkflowPublishTargetBranches :=
   Seq(RefPredicate.StartsWith(Ref.Tag("v")))
-
 ThisBuild / githubWorkflowPublish := Seq(
   WorkflowStep.Sbt(
     List("ci-release"),
