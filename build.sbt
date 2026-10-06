@@ -37,7 +37,7 @@ javacOptions ++= Seq("-source", "8", "-target", "8")
 val circeVersion = "0.14.16"
 
 libraryDependencies ++= Seq(
-  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.1.3",
+  "org.sangria-graphql" %% "sangria-marshalling-api" % "1.2.1",
   "io.circe" %% "circe-core" % circeVersion,
   "io.circe" %% "circe-generic" % circeVersion % Test,
   "org.sangria-graphql" %% "sangria-marshalling-testkit" % "1.0.4" % Test,
